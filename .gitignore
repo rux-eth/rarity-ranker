@@ -1,3 +1,4 @@
 /target
 /rarity-ranker/in/*
 /rarity-ranker/config/*
+.DS_Store
