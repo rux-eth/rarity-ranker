@@ -1,0 +1,13 @@
+{
+  "Red.png": {
+    "Tricolor.png": "Tricolor.png"
+  },
+  "Regular with Monobrow.png": {
+    "Red.png": "Red.png"
+  },
+  "Regular.png": {
+    "Tricolor.png": "Tricolor.png",
+    "Red.png": "Red.png",
+    "Regular with Monobrow.png": "Regular.png"
+  }
+}
