@@ -1,10 +1,5 @@
 mod rankable;
-use console::Term;
-use dialoguer::{theme::ColorfulTheme, Select};
-use serde_json::to_string_pretty;
-use std::io::Write;
-use std::{collections::HashMap, env, error::Error, fs, io, path};
-use walkdir::{DirEntry, WalkDir};
+use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut config: rankable::setup::Config = rankable::setup::get_config();
@@ -15,7 +10,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         counter += 1;
         println!(
             "\n\nCurrently Ranking Category {} / {}\nPath: {:#?}\n\n",
-            counter, length, &c.dirPath
+            counter, length, &c.dir_path
         );
         c.rank(&mut config);
     }

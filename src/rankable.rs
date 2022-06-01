@@ -1,18 +1,17 @@
 mod rating_algo;
 pub mod setup;
-use console::Term;
 use dialoguer::{theme::ColorfulTheme, Select};
 use serde::Serialize;
-use serde_json::{from_reader, to_writer_pretty};
+use serde_json::to_writer_pretty;
 use std::error::Error;
-use std::{collections::HashMap, env, fs, path};
+use std::{collections::HashMap, fs, path};
 
 use walkdir::{DirEntry, WalkDir};
 
 #[derive(Debug, Serialize)]
 pub struct Category {
     traits: Vec<Trait>,
-    pub dirPath: path::PathBuf,
+    pub dir_path: path::PathBuf,
 }
 #[derive(Debug, Eq, Ord, PartialEq, PartialOrd, Serialize)]
 struct Trait {
@@ -25,7 +24,7 @@ impl Category {
         match get_traits(&dp) {
             Ok(t) => Category {
                 traits: t,
-                dirPath: dp,
+                dir_path: dp,
             },
             Err(err) => panic!("{}", err),
         }
@@ -72,12 +71,12 @@ impl Category {
         }
         self.traits.sort_by(|a, b| b.elo.cmp(&a.elo));
         if make_json {
-            let mut cursor: path::PathBuf = (&self.dirPath).to_path_buf();
+            let mut cursor: path::PathBuf = (&self.dir_path).to_path_buf();
             cursor.push("rankings.json");
             to_writer_pretty(&fs::File::create(&cursor)?, &self)?;
         } else {
             for (rank, t) in (&self.traits).iter().enumerate() {
-                let mut cursor = (&self.dirPath).to_path_buf();
+                let mut cursor = (&self.dir_path).to_path_buf();
                 cursor.push(&t.title);
                 if !cursor.is_file() {
                     panic!("File not found: {}", &t.title);
@@ -92,7 +91,7 @@ impl Category {
             let best: (usize, usize) = self.best_matchup();
             let p: (f64, f64, f64) = self.spread(&best);
 
-            let mut a_wins: bool = false;
+            let a_wins: bool;
             if p.2 > config.settings.precision {
                 println!("All Traits Have Been Rated. Rename files or make JSON?");
                 match match Select::with_theme(&ColorfulTheme::default())

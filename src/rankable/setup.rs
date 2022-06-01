@@ -1,8 +1,7 @@
-use console::Term;
 use dialoguer::{theme::ColorfulTheme, Select};
 use serde::{Deserialize, Serialize};
 use serde_json::{from_reader, to_writer_pretty};
-use std::{collections::HashMap, env, error::Error, fmt::Display, fs, io, path};
+use std::{collections::HashMap, env, error::Error, fs, io, path};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Config {
@@ -20,7 +19,7 @@ pub fn get_config() -> Config {
         history: get_history(),
         settings: get_settings(),
     };
-    save_progress(&c);
+    save_progress(&c).expect("Could not save progress");
     c
 }
 fn get_history() -> HashMap<String, HashMap<String, String>> {
