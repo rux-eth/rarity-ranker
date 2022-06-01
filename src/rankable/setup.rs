@@ -15,7 +15,7 @@ pub struct Settings {
     pub trait_path: path::PathBuf,
 }
 
-pub fn initialize() -> Config {
+pub fn get_config() -> Config {
     let c = Config {
         history: get_history(),
         settings: get_settings(),
@@ -72,7 +72,7 @@ fn get_settings() -> Settings {
         cursor.pop();
         cursor.push("in");
         Settings {
-            precision: 0.8,
+            precision: 0.98,
             trait_path: cursor,
         }
     }
